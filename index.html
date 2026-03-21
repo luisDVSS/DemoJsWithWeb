@@ -1,15 +1,411 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
-    <title>Tarea 19-20-21-22-23</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practicas JavaScript</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 750px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f5f5f5;
+        color: #222;
+      }
+
+      h1 {
+        font-size: 1.4rem;
+        border-bottom: 2px solid #333;
+        padding-bottom: 8px;
+      }
+      h2 {
+        font-size: 1.1rem;
+        margin-top: 0;
+      }
+
+      nav {
+        margin: 15px 0;
+      }
+      nav a {
+        display: inline-block;
+        margin: 4px;
+        padding: 6px 12px;
+        background: #ddd;
+        text-decoration: none;
+        color: #222;
+        border: 1px solid #aaa;
+        font-size: 0.9rem;
+      }
+      nav a:hover,
+      nav a.activo {
+        background: #333;
+        color: #fff;
+      }
+
+      .seccion {
+        display: none;
+      }
+      .seccion.activa {
+        display: block;
+      }
+
+      .caja {
+        background: #fff;
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.9rem;
+      }
+      input[type="number"] {
+        padding: 5px 8px;
+        border: 1px solid #aaa;
+        width: 120px;
+        font-size: 0.9rem;
+      }
+
+      button {
+        padding: 6px 14px;
+        background: #333;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 0.85rem;
+        margin: 4px 2px;
+      }
+      button:hover {
+        background: #555;
+      }
+
+      .resultado {
+        margin-top: 10px;
+        padding: 8px 12px;
+        background: #eee;
+        border-left: 3px solid #333;
+        font-family: monospace;
+        font-size: 0.9rem;
+        white-space: pre-wrap;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 0.85rem;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 6px 10px;
+        text-align: left;
+      }
+      th {
+        background: #ddd;
+      }
+    </style>
   </head>
   <body>
-    <h1 id="innerhtml">Texto cambiante por InnerHTML</h1>
-    <button id="btnChangeInnerHtml">Cambiar by InnerHtml</button>
+    <h1>Prácticas JavaScript</h1>
 
-    <br />
-    <h1>Texto printeato con Document.write()</h1>
-    <button id="dcmwritebtn">Prinetear !</button>
+    <nav>
+      <a
+        href="#"
+        class="activo"
+        onclick="
+          mostrar('s1', this);
+          return false;
+        "
+        >1. Salidas de texto</a
+      >
+      <a
+        href="#"
+        onclick="
+          mostrar('s2', this);
+          return false;
+        "
+        >2. Variables y operaciones</a
+      >
+      <a
+        href="#"
+        onclick="
+          mostrar('s3', this);
+          return false;
+        "
+        >3. Formulario aritmético</a
+      >
+      <a
+        href="#"
+        onclick="
+          mostrar('s4', this);
+          return false;
+        "
+        >4. Fórmula cuadrática</a
+      >
+      <a
+        href="#"
+        onclick="
+          mostrar('s5', this);
+          return false;
+        "
+        >5. IMC</a
+      >
+    </nav>
+
+    <!-- SECCIÓN 1 -->
+    <div id="s1" class="seccion activa">
+      <div class="caja">
+        <h2>1. Salidas de texto en JavaScript</h2>
+
+        <p><strong>innerHTML</strong> — escribe directamente en el HTML:</p>
+        <div id="out-innerhtml" class="resultado"></div>
+
+        <br />
+        <p><strong>window.alert()</strong> — cuadro de diálogo emergente:</p>
+        <button
+          onclick="
+            alert(
+              'Nombre: Luis diaz\nEdad: 20\nCarrera: Ingeniería en software\nCiudad: Los Mochis',
+            )
+          "
+        >
+          Mostrar alert()
+        </button>
+
+        <br /><br />
+        <p>
+          <strong>console.log()</strong> — salida en la consola del navegador
+          (F12):
+        </p>
+        <button onclick="logConsola()">Ejecutar console.log()</button>
+        <div id="out-console" class="resultado" style="display: none"></div>
+
+        <br />
+        <p>
+          <strong>document.write()</strong> — escribe en el documento al
+          cargarse:
+        </p>
+        <div class="resultado">
+          document.write() se ejecutó al cargar la página. Usarlo después de la
+          carga sobreescribe todo el documento.
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2 -->
+    <div id="s2" class="seccion">
+      <div class="caja">
+        <h2>2. Variables y operaciones aritméticas</h2>
+        <p>Variables: <code>let a = 15</code> &nbsp; <code>let b = 4</code></p>
+        <div id="s2-res"></div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 3 -->
+    <div id="s3" class="seccion">
+      <div class="caja">
+        <h2>3. Operaciones con formulario</h2>
+        <label
+          >Valor A: <input type="number" id="f3a" placeholder="Ej. 10"
+        /></label>
+        <label
+          >Valor B: <input type="number" id="f3b" placeholder="Ej. 4"
+        /></label>
+        <br />
+        <button onclick="operar('suma')">Suma</button>
+        <button onclick="operar('resta')">Resta</button>
+        <button onclick="operar('division')">División</button>
+        <button onclick="operar('exp')">Exponenciación</button>
+        <div id="f3-res" class="resultado" style="display: none"></div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 4 -->
+    <div id="s4" class="seccion">
+      <div class="caja">
+        <h2>4. Fórmula general (cuadrática)</h2>
+        <p>Resuelve: ax² + bx + c = 0</p>
+        <label>a: <input type="number" id="f4a" placeholder="Ej. 1" /></label>
+        <label>b: <input type="number" id="f4b" placeholder="Ej. -3" /></label>
+        <label>c: <input type="number" id="f4c" placeholder="Ej. 2" /></label>
+        <br />
+        <button onclick="calcCuadratica()">Calcular x₁ y x₂</button>
+        <div id="f4-res" class="resultado" style="display: none"></div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 5 -->
+    <div id="s5" class="seccion">
+      <div class="caja">
+        <h2>5. Índice de Masa Corporal (mujer)</h2>
+        <label
+          >Peso (kg):
+          <input type="number" id="peso" placeholder="Ej. 60" step="0.1"
+        /></label>
+        <label
+          >Talla (m):
+          <input type="number" id="talla" placeholder="Ej. 1.65" step="0.01"
+        /></label>
+        <br />
+        <button onclick="calcIMC()">Calcular IMC</button>
+        <div id="imc-res" class="resultado" style="display: none"></div>
+      </div>
+
+      <div class="caja">
+        <h2>Tabla de clasificación</h2>
+        <table>
+          <tr>
+            <th>IMC</th>
+            <th>Clasificación</th>
+          </tr>
+          <tr>
+            <td>Menos de 18.5</td>
+            <td>Bajo peso</td>
+          </tr>
+          <tr>
+            <td>18.5 – 24.9</td>
+            <td>Peso normal</td>
+          </tr>
+          <tr>
+            <td>25.0 – 29.9</td>
+            <td>Sobrepeso</td>
+          </tr>
+          <tr>
+            <td>30.0 – 34.9</td>
+            <td>Obesidad grado I</td>
+          </tr>
+          <tr>
+            <td>35.0 – 39.9</td>
+            <td>Obesidad grado II</td>
+          </tr>
+          <tr>
+            <td>40.0 o más</td>
+            <td>Obesidad grado III</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      // Navegación
+      function mostrar(id, link) {
+        document
+          .querySelectorAll(".seccion")
+          .forEach((s) => s.classList.remove("activa"));
+        document
+          .querySelectorAll("nav a")
+          .forEach((a) => a.classList.remove("activo"));
+        document.getElementById(id).classList.add("activa");
+        link.classList.add("activo");
+      }
+
+      // Sección 1 - innerHTML
+      document.getElementById("out-innerhtml").innerHTML =
+        "Nombre: <b>Luis diaz</b> | Edad: 20 | Carrera: Ingeniería en software | Ciudad: Los Mochis";
+
+      function logConsola() {
+        console.log("Nombre: Luis diaz");
+        console.log("Edad: 20");
+        console.log("Carrera: Ingeniería en software");
+        const el = document.getElementById("out-console");
+        el.style.display = "block";
+        el.textContent =
+          "Datos enviados a la consola. Abre DevTools (F12) para verlos.";
+      }
+
+      // Sección 2 - variables fijas
+      const a = 15,
+        b = 4;
+      document.getElementById("s2-res").innerHTML =
+        `<div class="resultado">Suma: ${a} + ${b} = ${a + b}</div>` +
+        `<div class="resultado">Resta: ${a} - ${b} = ${a - b}</div>` +
+        `<div class="resultado">División: ${a} / ${b} = ${(a / b).toFixed(4)}</div>` +
+        `<div class="resultado">Exponenciación: ${a} ^ ${b} = ${a ** b}</div>`;
+
+      // Sección 3 - formulario
+      function operar(op) {
+        const a = parseFloat(document.getElementById("f3a").value);
+        const b = parseFloat(document.getElementById("f3b").value);
+        const res = document.getElementById("f3-res");
+        res.style.display = "block";
+
+        if (isNaN(a) || isNaN(b)) {
+          res.textContent = "Ingresa valores válidos en ambos campos.";
+          return;
+        }
+
+        if (op === "suma") res.textContent = `Suma: ${a} + ${b} = ${a + b}`;
+        if (op === "resta") res.textContent = `Resta: ${a} - ${b} = ${a - b}`;
+        if (op === "division") {
+          if (b === 0) {
+            res.textContent = "Error: no se puede dividir entre cero.";
+            return;
+          }
+          res.textContent = `División: ${a} / ${b} = ${(a / b).toFixed(4)}`;
+        }
+        if (op === "exp")
+          res.textContent = `Exponenciación: ${a} ^ ${b} = ${a ** b}`;
+      }
+
+      // Sección 4 - cuadrática
+      function calcCuadratica() {
+        const a = parseFloat(document.getElementById("f4a").value);
+        const b = parseFloat(document.getElementById("f4b").value);
+        const c = parseFloat(document.getElementById("f4c").value);
+        const res = document.getElementById("f4-res");
+        res.style.display = "block";
+
+        if (isNaN(a) || isNaN(b) || isNaN(c)) {
+          res.textContent = "Ingresa valores válidos.";
+          return;
+        }
+        if (a === 0) {
+          res.textContent = 'El coeficiente "a" no puede ser 0.';
+          return;
+        }
+
+        const disc = b ** 2 - 4 * a * c;
+
+        if (disc > 0) {
+          const x1 = (-b + Math.sqrt(disc)) / (2 * a);
+          const x2 = (-b - Math.sqrt(disc)) / (2 * a);
+          res.textContent = `Discriminante: ${disc} — dos raíces reales\nx₁ = ${x1.toFixed(4)}\nx₂ = ${x2.toFixed(4)}`;
+        } else if (disc === 0) {
+          const x = -b / (2 * a);
+          res.textContent = `Discriminante: 0 — raíz doble\nx₁ = x₂ = ${x.toFixed(4)}`;
+        } else {
+          const real = (-b / (2 * a)).toFixed(4);
+          const imag = (Math.sqrt(Math.abs(disc)) / (2 * a)).toFixed(4);
+          res.textContent = `Discriminante: ${disc} — raíces complejas\nx₁ = ${real} + ${imag}i\nx₂ = ${real} - ${imag}i`;
+        }
+      }
+
+      // Sección 5 - IMC
+      function calcIMC() {
+        const peso = parseFloat(document.getElementById("peso").value);
+        const talla = parseFloat(document.getElementById("talla").value);
+        const res = document.getElementById("imc-res");
+        res.style.display = "block";
+
+        if (isNaN(peso) || isNaN(talla) || peso <= 0 || talla <= 0) {
+          res.textContent = "Ingresa valores válidos.";
+          return;
+        }
+
+        const imc = peso / talla ** 2;
+        let clasificacion;
+        if (imc < 18.5) clasificacion = "Bajo peso";
+        else if (imc < 25) clasificacion = "Peso normal";
+        else if (imc < 30) clasificacion = "Sobrepeso";
+        else if (imc < 35) clasificacion = "Obesidad grado I";
+        else if (imc < 40) clasificacion = "Obesidad grado II";
+        else clasificacion = "Obesidad grado III (mórbida)";
+
+        res.textContent = `IMC = ${peso} / (${talla})² = ${imc.toFixed(2)}\nClasificación: ${clasificacion}`;
+      }
+    </script>
   </body>
-  <script src="script.js"></script>
 </html>
