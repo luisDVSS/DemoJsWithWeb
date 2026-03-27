@@ -3,46 +3,118 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Practicas JavaScript</title>
+    <title>Prácticas JavaScript</title>
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap");
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #f0ede8;
+        --surface: #ffffff;
+        --border: #d0ccc5;
+        --text: #1a1917;
+        --muted: #6b6760;
+        --accent: #1a1917;
+        --accent-fg: #f0ede8;
+        --result-bg: #1a1917;
+        --result-fg: #a8ff78;
+        --highlight: #e8e400;
+      }
+
       body {
-        font-family: Arial, sans-serif;
-        max-width: 750px;
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 24px 16px 48px;
+      }
+
+      header {
+        max-width: 820px;
+        margin: 0 auto 28px;
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        border-bottom: 2px solid var(--text);
+        padding-bottom: 14px;
+      }
+
+      header h1 {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      header span {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+
+      .layout {
+        max-width: 820px;
         margin: 0 auto;
-        padding: 20px;
-        background: #f5f5f5;
-        color: #222;
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 24px;
+        align-items: start;
       }
 
-      h1 {
-        font-size: 1.4rem;
-        border-bottom: 2px solid #333;
-        padding-bottom: 8px;
-      }
-      h2 {
-        font-size: 1.1rem;
-        margin-top: 0;
-      }
-
+      /* NAV */
       nav {
-        margin: 15px 0;
-      }
-      nav a {
-        display: inline-block;
-        margin: 4px;
-        padding: 6px 12px;
-        background: #ddd;
-        text-decoration: none;
-        color: #222;
-        border: 1px solid #aaa;
-        font-size: 0.9rem;
-      }
-      nav a:hover,
-      nav a.activo {
-        background: #333;
-        color: #fff;
+        position: sticky;
+        top: 24px;
+        background: var(--surface);
+        border: 1px solid var(--border);
       }
 
+      nav .nav-group-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        padding: 10px 14px 6px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      nav a {
+        display: block;
+        padding: 9px 14px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        text-decoration: none;
+        color: var(--muted);
+        border-bottom: 1px solid var(--border);
+        transition: all 0.1s;
+        line-height: 1.4;
+      }
+
+      nav a:last-child {
+        border-bottom: none;
+      }
+
+      nav a:hover {
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      nav a.activo {
+        background: var(--accent);
+        color: var(--accent-fg);
+        font-weight: 600;
+      }
+
+      /* SECTIONS */
       .seccion {
         display: none;
       }
@@ -51,246 +123,451 @@
       }
 
       .caja {
-        background: #fff;
-        border: 1px solid #ccc;
-        padding: 15px;
-        margin-bottom: 15px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 20px;
+        margin-bottom: 16px;
+      }
+
+      .caja h2 {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 16px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .caja p {
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-bottom: 10px;
+        line-height: 1.5;
       }
 
       label {
         display: block;
-        margin-bottom: 6px;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-bottom: 10px;
+        font-family: "JetBrains Mono", monospace;
       }
-      input[type="number"] {
-        padding: 5px 8px;
-        border: 1px solid #aaa;
-        width: 120px;
-        font-size: 0.9rem;
+
+      label input {
+        display: block;
+        margin-top: 4px;
+        padding: 7px 10px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.85rem;
+        width: 140px;
+        color: var(--text);
+        outline: none;
+        transition: border-color 0.15s;
+      }
+
+      label input:focus {
+        border-color: var(--text);
       }
 
       button {
-        padding: 6px 14px;
-        background: #333;
-        color: #fff;
+        padding: 7px 16px;
+        background: var(--accent);
+        color: var(--accent-fg);
         border: none;
         cursor: pointer;
-        font-size: 0.85rem;
-        margin: 4px 2px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin: 4px 4px 4px 0;
+        transition: opacity 0.1s;
       }
+
       button:hover {
-        background: #555;
+        opacity: 0.75;
       }
 
       .resultado {
-        margin-top: 10px;
-        padding: 8px 12px;
-        background: #eee;
-        border-left: 3px solid #333;
-        font-family: monospace;
-        font-size: 0.9rem;
+        margin-top: 12px;
+        padding: 12px 14px;
+        background: var(--result-bg);
+        color: var(--result-fg);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.8rem;
         white-space: pre-wrap;
+        line-height: 1.7;
+        border: none;
       }
 
+      /* Tables */
       table {
         border-collapse: collapse;
         width: 100%;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
+        font-family: "JetBrains Mono", monospace;
       }
+
       th,
       td {
-        border: 1px solid #ccc;
-        padding: 6px 10px;
+        border: 1px solid var(--border);
+        padding: 7px 12px;
         text-align: left;
       }
+
       th {
-        background: #ddd;
+        background: var(--bg);
+        font-weight: 700;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Multiplication tables grid */
+      .tabla-grid {
+        display: grid;
+        gap: 12px;
+        margin-top: 14px;
+      }
+
+      .tabla-grid.auto {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      }
+      .tabla-grid.manual {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      }
+
+      .tabla-item {
+        background: var(--result-bg);
+        color: var(--result-fg);
+        padding: 10px 12px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        line-height: 1.8;
+      }
+
+      .tabla-item .tabla-titulo {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--highlight);
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      /* Date section style */
+      .fecha-display {
+        margin-top: 12px;
+        padding: 14px 16px;
+        background: var(--result-bg);
+        color: var(--result-fg);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        display: none;
+      }
+
+      .fecha-display.visible {
+        display: block;
+      }
+      .fecha-display .fecha-grande {
+        font-size: 1rem;
+        color: var(--highlight);
+        font-weight: 700;
+        margin-top: 6px;
       }
     </style>
   </head>
   <body>
-    <h1>Prácticas JavaScript</h1>
+    <header>
+      <h1>Prácticas JavaScript</h1>
+      <span>Tareas 19 – 23</span>
+    </header>
 
-    <nav>
-      <a
-        href="#"
-        class="activo"
-        onclick="
-          mostrar('s1', this);
-          return false;
-        "
-        >1. Salidas de texto</a
-      >
-      <a
-        href="#"
-        onclick="
-          mostrar('s2', this);
-          return false;
-        "
-        >2. Variables y operaciones</a
-      >
-      <a
-        href="#"
-        onclick="
-          mostrar('s3', this);
-          return false;
-        "
-        >3. Formulario aritmético</a
-      >
-      <a
-        href="#"
-        onclick="
-          mostrar('s4', this);
-          return false;
-        "
-        >4. Fórmula cuadrática</a
-      >
-      <a
-        href="#"
-        onclick="
-          mostrar('s5', this);
-          return false;
-        "
-        >5. IMC</a
-      >
-    </nav>
-
-    <!-- SECCIÓN 1 -->
-    <div id="s1" class="seccion activa">
-      <div class="caja">
-        <h2>1. Salidas de texto en JavaScript</h2>
-
-        <p><strong>innerHTML</strong> — escribe directamente en el HTML:</p>
-        <div id="out-innerhtml" class="resultado"></div>
-
-        <br />
-        <p><strong>window.alert()</strong> — cuadro de diálogo emergente:</p>
-        <button
+    <div class="layout">
+      <nav>
+        <div class="nav-group-label">Secciones</div>
+        <a
+          href="#"
+          class="activo"
           onclick="
-            alert(
-              'Nombre: Luis diaz\nEdad: 20\nCarrera: Ingeniería en software\nCiudad: Los Mochis',
-            )
+            mostrar('s1', this);
+            return false;
           "
+          >1. Salidas de texto</a
         >
-          Mostrar alert()
-        </button>
+        <a
+          href="#"
+          onclick="
+            mostrar('s2', this);
+            return false;
+          "
+          >2. Variables</a
+        >
+        <a
+          href="#"
+          onclick="
+            mostrar('s3', this);
+            return false;
+          "
+          >3. Formulario aritmético</a
+        >
+        <a
+          href="#"
+          onclick="
+            mostrar('s4', this);
+            return false;
+          "
+          >4. Fórmula cuadrática</a
+        >
+        <a
+          href="#"
+          onclick="
+            mostrar('s5', this);
+            return false;
+          "
+          >5. IMC</a
+        >
+        <a
+          href="#"
+          onclick="
+            mostrar('s6', this);
+            return false;
+          "
+          >6. Fecha actual</a
+        >
+        <a
+          href="#"
+          onclick="
+            mostrar('s7', this);
+            return false;
+          "
+          >7. Tablas 1–10</a
+        >
+        <a
+          href="#"
+          onclick="
+            mostrar('s8', this);
+            return false;
+          "
+          >8. Tablas personalizadas</a
+        >
+      </nav>
 
-        <br /><br />
-        <p>
-          <strong>console.log()</strong> — salida en la consola del navegador
-          (F12):
-        </p>
-        <button onclick="logConsola()">Ejecutar console.log()</button>
-        <div id="out-console" class="resultado" style="display: none"></div>
+      <main>
+        <!-- S1 -->
+        <div id="s1" class="seccion activa">
+          <div class="caja">
+            <h2>1. Salidas de texto en JavaScript</h2>
+            <p><strong>innerHTML</strong> — escribe directamente en el HTML:</p>
+            <div id="out-innerhtml" class="resultado"></div>
 
-        <br />
-        <p>
-          <strong>document.write()</strong> — escribe en el documento al
-          cargarse:
-        </p>
-        <div class="resultado">
-          document.write() se ejecutó al cargar la página. Usarlo después de la
-          carga sobreescribe todo el documento.
+            <br />
+            <p>
+              <strong>window.alert()</strong> — cuadro de diálogo emergente:
+            </p>
+            <button
+              onclick="
+                alert(
+                  'Nombre: Luis Diaz\nEdad: 20\nCarrera: Ingeniería en Software\nCiudad: Los Mochis',
+                )
+              "
+            >
+              Mostrar alert()
+            </button>
+
+            <br /><br />
+            <p>
+              <strong>console.log()</strong> — salida en la consola del
+              navegador (F12):
+            </p>
+            <button onclick="logConsola()">Ejecutar console.log()</button>
+            <div id="out-console" class="resultado" style="display: none"></div>
+
+            <br />
+            <p>
+              <strong>document.write()</strong> — se ejecuta al cargar la
+              página:
+            </p>
+            <div class="resultado">
+              document.write() se ejecutó al cargar la página. Usarlo después de
+              la carga sobreescribe todo el documento.
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- SECCIÓN 2 -->
-    <div id="s2" class="seccion">
-      <div class="caja">
-        <h2>2. Variables y operaciones aritméticas</h2>
-        <p>Variables: <code>let a = 15</code> &nbsp; <code>let b = 4</code></p>
-        <div id="s2-res"></div>
-      </div>
-    </div>
+        <!-- S2 -->
+        <div id="s2" class="seccion">
+          <div class="caja">
+            <h2>2. Variables y operaciones aritméticas</h2>
+            <p>
+              Variables: <code>let a = 15</code> &nbsp; <code>let b = 4</code>
+            </p>
+            <div id="s2-res"></div>
+          </div>
+        </div>
 
-    <!-- SECCIÓN 3 -->
-    <div id="s3" class="seccion">
-      <div class="caja">
-        <h2>3. Operaciones con formulario</h2>
-        <label
-          >Valor A: <input type="number" id="f3a" placeholder="Ej. 10"
-        /></label>
-        <label
-          >Valor B: <input type="number" id="f3b" placeholder="Ej. 4"
-        /></label>
-        <br />
-        <button onclick="operar('suma')">Suma</button>
-        <button onclick="operar('resta')">Resta</button>
-        <button onclick="operar('division')">División</button>
-        <button onclick="operar('exp')">Exponenciación</button>
-        <div id="f3-res" class="resultado" style="display: none"></div>
-      </div>
-    </div>
+        <!-- S3 -->
+        <div id="s3" class="seccion">
+          <div class="caja">
+            <h2>3. Operaciones con formulario</h2>
+            <label
+              >Valor A: <input type="number" id="f3a" placeholder="Ej. 10"
+            /></label>
+            <label
+              >Valor B: <input type="number" id="f3b" placeholder="Ej. 4"
+            /></label>
+            <br />
+            <button onclick="operar('suma')">Suma</button>
+            <button onclick="operar('resta')">Resta</button>
+            <button onclick="operar('division')">División</button>
+            <button onclick="operar('exp')">Exponenciación</button>
+            <div id="f3-res" class="resultado" style="display: none"></div>
+          </div>
+        </div>
 
-    <!-- SECCIÓN 4 -->
-    <div id="s4" class="seccion">
-      <div class="caja">
-        <h2>4. Fórmula general (cuadrática)</h2>
-        <p>Resuelve: ax² + bx + c = 0</p>
-        <label>a: <input type="number" id="f4a" placeholder="Ej. 1" /></label>
-        <label>b: <input type="number" id="f4b" placeholder="Ej. -3" /></label>
-        <label>c: <input type="number" id="f4c" placeholder="Ej. 2" /></label>
-        <br />
-        <button onclick="calcCuadratica()">Calcular x₁ y x₂</button>
-        <div id="f4-res" class="resultado" style="display: none"></div>
-      </div>
-    </div>
+        <!-- S4 -->
+        <div id="s4" class="seccion">
+          <div class="caja">
+            <h2>4. Fórmula general (cuadrática)</h2>
+            <p>Resuelve: ax² + bx + c = 0</p>
+            <label
+              >a: <input type="number" id="f4a" placeholder="Ej. 1"
+            /></label>
+            <label
+              >b: <input type="number" id="f4b" placeholder="Ej. -3"
+            /></label>
+            <label
+              >c: <input type="number" id="f4c" placeholder="Ej. 2"
+            /></label>
+            <br />
+            <button onclick="calcCuadratica()">Calcular x₁ y x₂</button>
+            <div id="f4-res" class="resultado" style="display: none"></div>
+          </div>
+        </div>
 
-    <!-- SECCIÓN 5 -->
-    <div id="s5" class="seccion">
-      <div class="caja">
-        <h2>5. Índice de Masa Corporal (mujer)</h2>
-        <label
-          >Peso (kg):
-          <input type="number" id="peso" placeholder="Ej. 60" step="0.1"
-        /></label>
-        <label
-          >Talla (m):
-          <input type="number" id="talla" placeholder="Ej. 1.65" step="0.01"
-        /></label>
-        <br />
-        <button onclick="calcIMC()">Calcular IMC</button>
-        <div id="imc-res" class="resultado" style="display: none"></div>
-      </div>
+        <!-- S5 -->
+        <div id="s5" class="seccion">
+          <div class="caja">
+            <h2>5. Índice de Masa Corporal</h2>
+            <label
+              >Peso (kg):
+              <input type="number" id="peso" placeholder="Ej. 60" step="0.1"
+            /></label>
+            <label
+              >Talla (m):
+              <input
+                type="number"
+                id="talla"
+                placeholder="Ej. 1.65"
+                step="0.01"
+            /></label>
+            <br />
+            <button onclick="calcIMC()">Calcular IMC</button>
+            <div id="imc-res" class="resultado" style="display: none"></div>
+          </div>
+          <div class="caja">
+            <h2>Tabla de clasificación</h2>
+            <table>
+              <tr>
+                <th>IMC</th>
+                <th>Clasificación</th>
+              </tr>
+              <tr>
+                <td>Menos de 18.5</td>
+                <td>Bajo peso</td>
+              </tr>
+              <tr>
+                <td>18.5 – 24.9</td>
+                <td>Peso normal</td>
+              </tr>
+              <tr>
+                <td>25.0 – 29.9</td>
+                <td>Sobrepeso</td>
+              </tr>
+              <tr>
+                <td>30.0 – 34.9</td>
+                <td>Obesidad grado I</td>
+              </tr>
+              <tr>
+                <td>35.0 – 39.9</td>
+                <td>Obesidad grado II</td>
+              </tr>
+              <tr>
+                <td>40.0 o más</td>
+                <td>Obesidad grado III</td>
+              </tr>
+            </table>
+          </div>
+        </div>
 
-      <div class="caja">
-        <h2>Tabla de clasificación</h2>
-        <table>
-          <tr>
-            <th>IMC</th>
-            <th>Clasificación</th>
-          </tr>
-          <tr>
-            <td>Menos de 18.5</td>
-            <td>Bajo peso</td>
-          </tr>
-          <tr>
-            <td>18.5 – 24.9</td>
-            <td>Peso normal</td>
-          </tr>
-          <tr>
-            <td>25.0 – 29.9</td>
-            <td>Sobrepeso</td>
-          </tr>
-          <tr>
-            <td>30.0 – 34.9</td>
-            <td>Obesidad grado I</td>
-          </tr>
-          <tr>
-            <td>35.0 – 39.9</td>
-            <td>Obesidad grado II</td>
-          </tr>
-          <tr>
-            <td>40.0 o más</td>
-            <td>Obesidad grado III</td>
-          </tr>
-        </table>
-      </div>
+        <!-- S6: Fecha actual con switch -->
+        <div id="s6" class="seccion">
+          <div class="caja">
+            <h2>6. Fecha actual (switch)</h2>
+            <p>
+              Al dar clic se muestra la fecha en formato legible usando la
+              condición <code>switch</code>.
+            </p>
+            <button onclick="mostrarFecha()">Mostrar fecha actual</button>
+            <div id="s6-res" class="fecha-display">
+              <div id="s6-texto"></div>
+              <div id="s6-grande" class="fecha-grande"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- S7: Tablas 1–10 -->
+        <div id="s7" class="seccion">
+          <div class="caja">
+            <h2>7. Tablas de multiplicar del 1 al 10</h2>
+            <p>Genera automáticamente las tablas del 1 al 10 usando ciclos.</p>
+            <button onclick="generarTablas10()">
+              Generar tablas del 1 al 10
+            </button>
+            <div
+              id="s7-res"
+              class="tabla-grid auto"
+              style="display: none"
+            ></div>
+          </div>
+        </div>
+
+        <!-- S8: Tablas personalizadas -->
+        <div id="s8" class="seccion">
+          <div class="caja">
+            <h2>8. Tablas de multiplicar personalizadas</h2>
+            <p>
+              Ingresa un número positivo y entero para generar las tablas del 1
+              hasta ese número.
+            </p>
+            <label
+              >Número máximo:
+              <input
+                type="number"
+                id="f8n"
+                placeholder="Ej. 5"
+                min="1"
+                step="1"
+            /></label>
+            <br />
+            <button onclick="generarTablasN()">Generar tablas</button>
+            <div
+              id="s8-res"
+              class="tabla-grid manual"
+              style="display: none"
+            ></div>
+          </div>
+        </div>
+      </main>
     </div>
 
     <script>
-      // Navegación
+      // --- Navegación ---
       function mostrar(id, link) {
         document
           .querySelectorAll(".seccion")
@@ -302,41 +579,41 @@
         link.classList.add("activo");
       }
 
-      // Sección 1 - innerHTML
+      // --- S1: innerHTML ---
       document.getElementById("out-innerhtml").innerHTML =
-        "Nombre: <b>Luis diaz</b> | Edad: 20 | Carrera: Ingeniería en software | Ciudad: Los Mochis";
+        "Nombre: <b>Luis Diaz</b> | Edad: 20 | Carrera: Ingeniería en Software | Ciudad: Los Mochis";
 
       function logConsola() {
-        console.log("Nombre: Luis diaz");
+        console.log("Nombre: Luis Diaz");
         console.log("Edad: 20");
-        console.log("Carrera: Ingeniería en software");
+        console.log("Carrera: Ingeniería en Software");
         const el = document.getElementById("out-console");
         el.style.display = "block";
         el.textContent =
-          "Datos enviados a la consola. Abre DevTools (F12) para verlos.";
+          "Datos enviados a la consola.\nAbre DevTools (F12) para verlos.";
       }
 
-      // Sección 2 - variables fijas
-      const a = 15,
-        b = 4;
-      document.getElementById("s2-res").innerHTML =
-        `<div class="resultado">Suma: ${a} + ${b} = ${a + b}</div>` +
-        `<div class="resultado">Resta: ${a} - ${b} = ${a - b}</div>` +
-        `<div class="resultado">División: ${a} / ${b} = ${(a / b).toFixed(4)}</div>` +
-        `<div class="resultado">Exponenciación: ${a} ^ ${b} = ${a ** b}</div>`;
+      // --- S2: Variables fijas ---
+      (function () {
+        const a = 15,
+          b = 4;
+        document.getElementById("s2-res").innerHTML =
+          `<div class="resultado">Suma:           ${a} + ${b} = ${a + b}</div>` +
+          `<div class="resultado">Resta:          ${a} - ${b} = ${a - b}</div>` +
+          `<div class="resultado">División:       ${a} / ${b} = ${(a / b).toFixed(4)}</div>` +
+          `<div class="resultado">Exponenciación: ${a} ^ ${b} = ${a ** b}</div>`;
+      })();
 
-      // Sección 3 - formulario
+      // --- S3: Formulario aritmético ---
       function operar(op) {
         const a = parseFloat(document.getElementById("f3a").value);
         const b = parseFloat(document.getElementById("f3b").value);
         const res = document.getElementById("f3-res");
         res.style.display = "block";
-
         if (isNaN(a) || isNaN(b)) {
           res.textContent = "Ingresa valores válidos en ambos campos.";
           return;
         }
-
         if (op === "suma") res.textContent = `Suma: ${a} + ${b} = ${a + b}`;
         if (op === "resta") res.textContent = `Resta: ${a} - ${b} = ${a - b}`;
         if (op === "division") {
@@ -350,14 +627,13 @@
           res.textContent = `Exponenciación: ${a} ^ ${b} = ${a ** b}`;
       }
 
-      // Sección 4 - cuadrática
+      // --- S4: Cuadrática ---
       function calcCuadratica() {
         const a = parseFloat(document.getElementById("f4a").value);
         const b = parseFloat(document.getElementById("f4b").value);
         const c = parseFloat(document.getElementById("f4c").value);
         const res = document.getElementById("f4-res");
         res.style.display = "block";
-
         if (isNaN(a) || isNaN(b) || isNaN(c)) {
           res.textContent = "Ingresa valores válidos.";
           return;
@@ -366,9 +642,7 @@
           res.textContent = 'El coeficiente "a" no puede ser 0.';
           return;
         }
-
         const disc = b ** 2 - 4 * a * c;
-
         if (disc > 0) {
           const x1 = (-b + Math.sqrt(disc)) / (2 * a);
           const x2 = (-b - Math.sqrt(disc)) / (2 * a);
@@ -383,18 +657,16 @@
         }
       }
 
-      // Sección 5 - IMC
+      // --- S5: IMC ---
       function calcIMC() {
         const peso = parseFloat(document.getElementById("peso").value);
         const talla = parseFloat(document.getElementById("talla").value);
         const res = document.getElementById("imc-res");
         res.style.display = "block";
-
         if (isNaN(peso) || isNaN(talla) || peso <= 0 || talla <= 0) {
           res.textContent = "Ingresa valores válidos.";
           return;
         }
-
         const imc = peso / talla ** 2;
         let clasificacion;
         if (imc < 18.5) clasificacion = "Bajo peso";
@@ -403,8 +675,126 @@
         else if (imc < 35) clasificacion = "Obesidad grado I";
         else if (imc < 40) clasificacion = "Obesidad grado II";
         else clasificacion = "Obesidad grado III (mórbida)";
-
         res.textContent = `IMC = ${peso} / (${talla})² = ${imc.toFixed(2)}\nClasificación: ${clasificacion}`;
+      }
+
+      // --- S6: Fecha actual con switch ---
+      function mostrarFecha() {
+        const hoy = new Date();
+        const diaSemana = hoy.getDay(); // 0=Dom … 6=Sab
+        const diaMes = hoy.getDate();
+        const mes = hoy.getMonth(); // 0–11
+        const anio = hoy.getFullYear();
+
+        let nombreDia;
+        switch (diaSemana) {
+          case 0:
+            nombreDia = "domingo";
+            break;
+          case 1:
+            nombreDia = "lunes";
+            break;
+          case 2:
+            nombreDia = "martes";
+            break;
+          case 3:
+            nombreDia = "miércoles";
+            break;
+          case 4:
+            nombreDia = "jueves";
+            break;
+          case 5:
+            nombreDia = "viernes";
+            break;
+          case 6:
+            nombreDia = "sábado";
+            break;
+        }
+
+        let nombreMes;
+        switch (mes) {
+          case 0:
+            nombreMes = "Enero";
+            break;
+          case 1:
+            nombreMes = "Febrero";
+            break;
+          case 2:
+            nombreMes = "Marzo";
+            break;
+          case 3:
+            nombreMes = "Abril";
+            break;
+          case 4:
+            nombreMes = "Mayo";
+            break;
+          case 5:
+            nombreMes = "Junio";
+            break;
+          case 6:
+            nombreMes = "Julio";
+            break;
+          case 7:
+            nombreMes = "Agosto";
+            break;
+          case 8:
+            nombreMes = "Septiembre";
+            break;
+          case 9:
+            nombreMes = "Octubre";
+            break;
+          case 10:
+            nombreMes = "Noviembre";
+            break;
+          case 11:
+            nombreMes = "Diciembre";
+            break;
+        }
+
+        const frase = `Hoy es ${nombreDia} ${diaMes} de ${nombreMes} del año ${anio}`;
+        const contenedor = document.getElementById("s6-res");
+        contenedor.classList.add("visible");
+        document.getElementById("s6-texto").textContent = "→ new Date()";
+        document.getElementById("s6-grande").textContent = frase;
+      }
+
+      // --- S7: Tablas del 1 al 10 ---
+      function generarTablas10() {
+        const cont = document.getElementById("s7-res");
+        cont.style.display = "grid";
+        cont.innerHTML = "";
+        for (let i = 1; i <= 10; i++) {
+          let html = `<div class="tabla-item"><div class="tabla-titulo">Tabla del ${i}</div>`;
+          for (let j = 1; j <= 10; j++) {
+            html += `${i} × ${j} = ${i * j}\n`;
+          }
+          html += "</div>";
+          cont.innerHTML += html;
+        }
+      }
+
+      // --- S8: Tablas hasta N ---
+      function generarTablasN() {
+        const n = parseInt(document.getElementById("f8n").value);
+        const cont = document.getElementById("s8-res");
+
+        if (isNaN(n) || n < 1) {
+          cont.style.display = "grid";
+          cont.innerHTML =
+            '<div class="tabla-item">Ingresa un número positivo y entero.</div>';
+          return;
+        }
+
+        cont.style.display = "grid";
+        cont.innerHTML = "";
+        for (let i = 1; i <= n; i++) {
+          let html = `<div class="tabla-item"><div class="tabla-titulo">Tabla del ${i}</div>`;
+          for (let j = 1; j <= 10; j++) {
+            html += `${i} × ${j} = ${i * j}\n`;
+          }
+          html += "</div>";
+          cont.innerHTML += html;
+        }
       }
     </script>
   </body>
