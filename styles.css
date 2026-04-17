@@ -1,0 +1,276 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #f0ede8;
+  --surface: #ffffff;
+  --border: #d0ccc5;
+  --text: #1a1917;
+  --muted: #6b6760;
+  --accent: #1a1917;
+  --accent-fg: #f0ede8;
+  --result-bg: #1a1917;
+  --result-fg: #a8ff78;
+  --highlight: #e8e400;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 24px 16px 48px;
+}
+
+header {
+  max-width: 820px;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  border-bottom: 2px solid var(--text);
+  padding-bottom: 14px;
+}
+
+header h1 {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+header span {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.layout {
+  max-width: 820px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+nav .nav-group-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  padding: 10px 14px 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+nav a {
+  display: block;
+  padding: 9px 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  text-decoration: none;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.1s;
+  line-height: 1.4;
+}
+
+nav a:last-child {
+  border-bottom: none;
+}
+
+nav a:hover {
+  background: var(--bg);
+  color: var(--text);
+}
+
+nav a.activo {
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-weight: 600;
+}
+
+/* SECTIONS */
+.seccion {
+  display: none;
+}
+.seccion.activa {
+  display: block;
+}
+
+.caja {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.caja h2 {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.caja p {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 10px;
+  font-family: "JetBrains Mono", monospace;
+}
+
+label input {
+  display: block;
+  margin-top: 4px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  width: 140px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+label input:focus {
+  border-color: var(--text);
+}
+
+button {
+  padding: 7px 16px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  border: none;
+  cursor: pointer;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 4px 4px 4px 0;
+  transition: opacity 0.1s;
+}
+
+button:hover {
+  opacity: 0.75;
+}
+
+.resultado {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: var(--result-bg);
+  color: var(--result-fg);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+  line-height: 1.7;
+  border: none;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.8rem;
+  font-family: "JetBrains Mono", monospace;
+}
+
+th,
+td {
+  border: 1px solid var(--border);
+  padding: 7px 12px;
+  text-align: left;
+}
+
+th {
+  background: var(--bg);
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Multiplication tables grid */
+.tabla-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.tabla-grid.auto {
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+.tabla-grid.manual {
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+.tabla-item {
+  background: var(--result-bg);
+  color: var(--result-fg);
+  padding: 10px 12px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.72rem;
+  line-height: 1.8;
+}
+
+.tabla-item .tabla-titulo {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--highlight);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Date section style */
+.fecha-display {
+  margin-top: 12px;
+  padding: 14px 16px;
+  background: var(--result-bg);
+  color: var(--result-fg);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  display: none;
+}
+
+.fecha-display.visible {
+  display: block;
+}
+
+.fecha-display .fecha-grande {
+  font-size: 1rem;
+  color: var(--highlight);
+  font-weight: 700;
+  margin-top: 6px;
+}
